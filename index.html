@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>A Story for Manasa ❤️</title>
+  <!-- Google Fonts: Outfit, Cinzel, Playfair Display, Cormorant Garamond, Fraunces, Great Vibes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Outfit:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;0,800;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,900&family=Great+Vibes&display=swap" rel="stylesheet">
+  <!-- GSAP CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Floating Ambient Particles Background -->
+  <canvas id="ambient-particles"></canvas>
+
+  <!-- Background Music Control Widget -->
+  <div class="music-widget" id="music-widget">
+    <button class="music-btn" id="music-toggle-btn" aria-label="Toggle Music">
+      <!-- Mute/Unmute Icon -->
+      <svg id="music-icon" viewBox="0 0 24 24">
+        <path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>
+      </svg>
+    </button>
+    <div class="volume-slider-container">
+      <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.5">
+    </div>
+  </div>
+
+  <!-- Music permission overlay (required by modern browsers for audio autoplay) -->
+  <div class="audio-overlay" id="audio-overlay">
+    <div class="audio-overlay-card">
+      <h2>Welcome to a Secret Story...</h2>
+      <p>all these are made with my love .</p>
+      <button class="primary-btn" id="start-experience-btn">Enter Experience</button>
+    </div>
+  </div>
+
+  <div class="experience-container">
+
+    <!-- SCENE 1: The Vintage Hardcover Novel -->
+    <div class="scene active" id="scene-storybook">
+      <div class="book-wrapper">
+        <div class="book" id="main-book">
+          <!-- Cover -->
+          <div class="book-cover" id="book-cover">
+            <div class="cover-content">
+              <div class="cover-border"></div>
+              <h1 class="cover-title">A Story for Manasa <span class="heart-pulse">❤️</span></h1>
+              <p class="cover-subtitle">Open me...</p>
+              <div class="cover-decor">✨ 📖 ✨</div>
+            </div>
+          </div>
+          <!-- Inside Right Page (Seen when opening) -->
+          <div class="book-page book-page-right" id="intro-page">
+            <div class="page-content">
+              <p class="magical-quote" id="quote-text">Every beautiful story it may be friendship , love ,...etc begins with small incidents...❤️❤️❤️</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCENE 2: Password Page -->
+    <div class="scene" id="scene-password">
+      <div class="vintage-page-card">
+        <div class="page-header">✨ The Lock of Secrets ✨</div>
+        <h2 class="scene-title">Enter the Secret Password</h2>
+        <p class="scene-subtitle">A key to the garden of memories...</p>
+        
+        <form class="password-form" id="password-form" onsubmit="return false;">
+          <div class="password-input-wrapper">
+            <input type="password" id="password-input" maxlength="4" placeholder="••••" autocomplete="off" autofocus>
+            <div class="glow-effect"></div>
+          </div>
+          <p class="password-hint" id="password-hint">Hint: 143</p>
+          <div class="error-msg" id="password-error">Oops... that's not the right secret.</div>
+        </form>
+      </div>
+    </div>
+
+    <!-- SCENE 3: Cupid Scene -->
+    <div class="scene" id="scene-cupid">
+      <div class="scene-overlay-text">
+        <h2>Touch the bow and shoot the arrow...</h2>
+      </div>
+      <canvas id="cupid-canvas"></canvas>
+    </div>
+
+    <!-- SCENE 4 & 5: Magical Garden & Tree Display -->
+    <div class="scene" id="scene-garden">
+      <canvas id="tree-canvas"></canvas>
+
+      <div class="garden-message-layer" id="garden-message-layer">
+        <h1 class="garden-main-title" id="friendship-title">Happy Friendship Day Manasa ❤️</h1>
+        <div class="letter-card-container" id="letter-card-container">
+          <div class="letter-card">
+            <p id="letter-matter">Every friendship has a story... Ours is my favorite. Thank you for always listening, caring, and brightening up even the grayest days. You are a treasure in my life!</p>
+          </div>
+        </div>
+        <button class="primary-btn next-scene-btn" id="go-to-letter-btn" style="margin-top: 25px;">Read My Letter &rarr;</button>
+      </div>
+    </div>
+
+    <div class="scene" id="scene-letter">
+      <div class="letter-scene-card">
+        <div class="letter-scene-header">A little note for Manasa</div>
+        <div class="letter-scene-photo-wrap">
+          <img class="letter-scene-photo" src="manasa.jpg" alt="Picture for Manasa" />
+        </div>
+        <div class="letter-scene-text-box">
+          <p>Every friendship has a story... Ours is my favorite. Thank you for always listening, caring, and brightening up even the grayest days. You are a treasure in my life!</p>
+        </div>
+        <button class="primary-btn next-scene-btn" id="go-to-gallery-btn" style="margin-top: 20px;">Open Memory Gallery &rarr;</button>
+      </div>
+    </div>
+
+    <!-- SCENE 6: Polaroid Memory Gallery & Ending Scene -->
+    <div class="scene" id="scene-gallery">
+      <div class="gallery-header-layer">
+        <h2 class="gallery-title">Our Sweetest Memories</h2>
+        <p class="gallery-subtitle">Click photos to zoom in</p>
+      </div>
+      <!-- Floating Polaroids Container -->
+      <div class="polaroid-gallery" id="polaroid-gallery">
+        <!-- Generated Dynamically -->
+      </div>
+
+      <!-- Ending Overlay Layer -->
+      <div class="ending-layer" id="ending-layer">
+        <h2 class="ending-text">Thank you for being part of my story.</h2>
+        <h1 class="ending-title">Happy Friendship Day, Manasa ❤️</h1>
+        <p class="ending-subtext">Made with lots of care just for you.</p>
+        <div class="beating-heart-container">
+          <div class="beating-heart">❤️</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Zoomed Photo Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-content">
+      <img id="lightbox-img" src="" alt="Zoomed memory">
+      <div class="lightbox-caption" id="lightbox-caption">Our special memory</div>
+      <button class="lightbox-close" id="lightbox-close">&times;</button>
+    </div>
+  </div>
+
+  <!-- Main JavaScript File -->
+  <script src="script.js"></script>
+</body>
+</html>
